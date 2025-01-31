@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @formatter:off -->
+<documentation_rules>
+    <meta>
+        <version>2025_01_28_001</version>
+        <version_rules>
+            <format>YYYY_MM_DD_NNN</format>
+            <description>Version number format</description>
+            <rules>
+                <rule>Date (YYYY_MM_DD): Documentation rule update date</rule>
+                <rule>Number (NNN): Treated as a sequential number, continuing even when date changes</rule>
+                <rule>Example: After 2025_01_28_001 comes 2025_01_29_002, keeping sequence even when date changes</rule>
+            </rules>
+            <notes>
+                <note>Once assigned, version numbers should not be changed</note>
+                <note>When creating a new version, always use the latest number plus 1</note>
+            </notes>
+        </version_rules>
+    </meta>
+    <initialization>
+        <display_settings>
+            <show_version>true</show_version>
+            <show_target_files>true</show_target_files>
+            <show_documentation_levels>true</show_documentation_levels>
+            <messages>
+                <version_format>Documentation Rules Version: {version}</version_format>
+                <target_files_format>Target Files:
+                    Include Patterns:
+                    {include_patterns}
+
+                    Exclude Patterns:
+                    {exclude_patterns}
+                </target_files_format>
+                <levels_format>Documentation Levels:
+                    {levels}
+                </levels_format>
+            </messages>
+        </display_settings>
+    </initialization>
+    <target_files>
+        <include>
+            <pattern>lib/**/*.dart</pattern>
+        </include>
+        <exclude>
+            <pattern>**/*_test.dart</pattern>
+            <pattern>**/*.g.dart</pattern>
+            <pattern>**/*.freezed.dart</pattern>
+        </exclude>
+    </target_files>
+    <policies>
+        <documentation_levels>
+            <level name="core">
+                <description>Core level documentation requirements</description>
+                <targets>Data models, major view components, customizable classes</targets>
+                <depth>Relationships between related APIs, key considerations</depth>
+                <examples>Typical use cases</examples>
+            </level>
+            <level name="standard">
+                <description>Standard level documentation requirements</description>
+                <targets>APIs primarily for reference, classes that don't need customization</targets>
+                <depth>Concise overview</depth>
+                <examples>Not needed</examples>
+            </level>
+        </documentation_levels>
+
+        <themes>
+            <required_themes>
+                <theme>Widget constraints</theme>
+                <theme>API relationships</theme>
+                <theme>State management</theme>
+            </required_themes>
+            <excluded_themes>
+                <theme>Performance optimizations</theme>
+                <theme>Implementation details (unless specifically required)</theme>
+            </excluded_themes>
+        </themes>
+    </policies>
+    <templates>
+        <template type="class">
+            <format>/// A class that represents {purpose}.
+                ///
+                /// {Conceptual explanation of core functionality and behavior}
+                ///
+                /// See also:
+                /// * [RelatedClass], for {related functionality}
+            </format>
+            <notes>
+                <note>Start with a clear single-sentence summary of the class purpose</note>
+                <note>Follow with conceptual explanation</note>
+                <note>Avoid listing properties or methods in class comments</note>
+            </notes>
+        </template>
+
+        <template type="method">
+            <format>/// {Brief description of what the method does}.
+                ///
+                /// {Detailed explanation if needed}.
+                ///
+                /// If [paramName] is invalid, throws an [Exception].
+                /// Returns {description of the return value}.
+            </format>
+            <notes>
+                <note>Start with a clear action statement</note>
+                <note>Reference parameters using [paramName] syntax</note>
+                <note>Describe errors and return values in prose</note>
+            </notes>
+        </template>
+
+        <template type="property">
+            <format>/// {Description of what this property represents}.
+                ///
+                /// {Additional details about constraints or usage}
+            </format>
+            <notes>
+                <note>Explain both what it is and how it should be used</note>
+                <note>Document any constraints or side effects</note>
+            </notes>
+        </template>
+    </templates>
+
+    <documentation_practices>
+        <code_preservation>
+            <rule>Always preserve class declarations, annotations, and modifiers</rule>
+            <rule>When updating documentation comments, do not modify the implementation code itself</rule>
+        </code_preservation>
+
+        <linting_rules>
+            <rule>Always preserve existing linter rules (ignore annotations)</rule>
+            <rule>When adding new ignore annotations, always leave a comment explaining why</rule>
+        </linting_rules>
+
+        <class_documentation>
+            <structure>
+                <rule>Start with a single-sentence explanation of the class's essence</rule>
+                <rule>Follow with conceptual explanation</rule>
+                <rule>Avoid structuring with sections</rule>
+                <rule>Avoid performance explanations unless instructed</rule>
+                <rule>Avoid mentioning specific properties or methods</rule>
+                <rule>End with See also section referencing related classes</rule>
+            </structure>
+        </class_documentation>
+
+        <constructor_documentation>
+            <description>Constructor documentation guidelines</description>
+            <rules>
+                <rule>Always document public constructors</rule>
+                <rule>Do not document whether arguments are required or optional</rule>
+                <rule>Focus on explaining the purpose and behavior of the constructor</rule>
+            </rules>
+            <examples>
+                <good_example>
+                    <title>Good constructor documentation:</title>
+                    <content>/// Creates a new person instance.</content>
+                </good_example>
+                <bad_example>
+                    <title>Constructor documentation to avoid:</title>
+                    <content>/// Creates a new person instance.
+                        /// [name] is optional and [age] is required.
+                    </content>
+                </bad_example>
+                <notes>
+                    <note>Required/optional status should be clear from the type signatures</note>
+                    <note>Focus documentation on behavior and purpose rather than parameter constraints</note>
+                </notes>
+            </examples>
+        </constructor_documentation>
+
+        <method_documentation>
+            <structure>
+                <rule>Start with a clear action statement</rule>
+                <rule>Describe parameters and return values in prose</rule>
+                <rule>Document exceptions and error conditions</rule>
+            </structure>
+            <rules>
+                <rule>Start with a clear action statement</rule>
+                <rule>Do not document whether parameters are required or optional</rule>
+                <rule>Focus on behavior, effects, and return values</rule>
+                <rule>Document exceptions and error cases in natural prose</rule>
+                <rule>Include examples for complex operations</rule>
+            </rules>
+            <examples>
+                <good_example>
+                    <title>Good method documentation example:</title>
+                    <content>/// Creates a new node with the given [id] and adds it to the graph.
+                        ///
+                        /// Places the node using the current layout algorithm.
+                        /// Throws [DuplicateNodeException] if a node with [id] already exists.
+                    </content>
+                </good_example>
+                <bad_example>
+                    <title>Method documentation to avoid:</title>
+                    <content>/// Creates a new node with the given [id] and adds it to the graph.
+                        ///
+                        /// The [id] parameter is required. The optional [position] parameter
+                        /// specifies where to place the node.
+                    </content>
+                </bad_example>
+            </examples>
+            <notes>
+                <note>Parameter optionality should be clear from type signatures</note>
+                <note>Focus on explaining what the method does and its effects</note>
+                <note>For complex parameters, explain their purpose rather than their constraint level</note>
+            </notes>
+        </method_documentation>
+
+        <property_documentation>
+            <structure>
+                <rule>Explain the property's purpose and usage</rule>
+                <rule>Document constraints and side effects</rule>
+            </structure>
+        </property_documentation>
+
+        <state_documentation>
+            <rules>
+                <rule>Document how state changes affect other components</rule>
+                <rule>Always document side effects of state changes</rule>
+                <rule>Document state changes from asynchronous operations</rule>
+            </rules>
+        </state_documentation>
+
+        <lifecycle_documentation>
+            <rules>
+                <rule>Document initialization and disposal procedures</rule>
+                <rule>Document when resource release is needed</rule>
+                <rule>Document dependencies with parent widgets</rule>
+            </rules>
+        </lifecycle_documentation>
+
+        <cross_references>
+            <rules>
+                <rule>Use square brackets for references to other elements (e.g., [ClassName])</rule>
+                <rule>Add a comma after references in lists or enumerations</rule>
+                <rule>When introducing a topic with a reference, always use a comma instead of a colon</rule>
+                <examples>
+                    <incorrect>Features include [NodeGraph] [Layout] and [Renderer]</incorrect>
+                    <correct>Features include [NodeGraph], [Layout], and [Renderer].</correct>
+                    <incorrect>- [Shortcuts]: a widget used to bind key combinations to [Intent]s</incorrect>
+                    <correct>- [Shortcuts], a widget used to bind key combinations to [Intent]s.</correct>
+                </examples>
+            </rules>
+        </cross_references>
+
+        <error_documentation>
+            <rules>
+                <rule>Describe error cases in natural prose</rule>
+                <rule>Document all possible exceptions</rule>
+            </rules>
+        </error_documentation>
+
+
+        <default_values>
+            <description>Rules for documenting default values</description>
+            <rules>
+                <rule>Do not include default values in documentation unless specifically instructed</rule>
+            </rules>
+            <examples>
+                <good_example>
+                    <title>Good documentation (without default value):</title>
+                    <content>/// The duration of the animation.</content>
+                </good_example>
+                <bad_example>
+                    <title>Bad documentation (including unnecessary default value):</title>
+                    <content>/// The duration of the animation. Defaults to 300 milliseconds.</content>
+                </bad_example>
+                <exception>
+                    <title>Exception case (when specifically instructed):</title>
+                    <content>/// The duration of the animation. The default value of 300 milliseconds
+                        /// is based on extensive user testing and should be suitable for most cases.
+                    </content>
+                </exception>
+            </examples>
+            <notes>
+                <note>Default values should be documented only when their understanding is crucial for API usage</note>
+                <note>When documenting default values, explain the rationale behind the chosen default</note>
+            </notes>
+        </default_values>
+
+
+        <freezed_documentation>
+            <description>Documentation rules for classes using the @freezed annotation</description>
+            <rules>
+                <rule>Always document the constructor when @freezed is specified</rule>
+                <rule>Document each parameter in the constructor</rule>
+            </rules>
+            <examples>
+                <good_example>
+                    <title>Good freezed documentation:</title>
+                    <content>@freezed
+class Person with _$Person {
+  /// Creates a person with the specified name and age.
+  const factory Person({
+    /// The name of the person.
+    String? name,
+    /// The age of the person.
+    int? age,
+  }) = _Person;
+}</content>
+                </good_example>
+                <bad_example>
+                    <title>Bad freezed documentation (missing constructor or parameter docs):</title>
+                    <content>@freezed
+class Person with _$Person {
+  const factory Person({
+    String? name,  // Missing parameter documentation
+    int? age,      // Missing parameter documentation
+  }) = _Person;    // Missing constructor documentation
+}</content>
+                </bad_example>
+                <bad_example>
+                    <title>Bad freezed documentation (incomplete documentation):</title>
+                    <content>@freezed
+class Person with _$Person {
+  /// Creates a person.  // Constructor documented but too brief
+  const factory Person({
+    String? name,    // Missing parameter documentation
+    /// The age of the person.  // Only some parameters documented
+    int? age,
+  }) = _Person;
+}</content>
+                </bad_example>
+            </examples>
+            <notes>
+                <note>Constructor documentation should explain the purpose of creating the instance</note>
+                <note>Each parameter documentation should clearly explain its role and purpose</note>
+                <note>These rules apply to all factory constructors in the freezed class</note>
+            </notes>
+        </freezed_documentation>
+    </documentation_practices>
+
+    <ai_assistant_guidelines>
+        <guideline id="syntax">
+            <rules>
+                <rule>Follow all syntax rules defined in documentation_practices precisely</rule>
+                <rule>Maintain exact code structure including whitespace and line breaks</rule>
+                <rule>Preserve all existing annotations and modifiers</rule>
+            </rules>
+        </guideline>
+        <guideline id="structure">
+            <rules>
+                <rule>Write detailed descriptions at definition sites</rule>
+                <rule>Keep class documentation at conceptual level</rule>
+            </rules>
+        </guideline>
+        <guideline id="style">
+            <rules>
+                <rule>Use prose for parameter and return value descriptions</rule>
+                <rule>Maintain consistent documentation style</rule>
+            </rules>
+        </guideline>
+    </ai_assistant_guidelines>
+</documentation_rules>
